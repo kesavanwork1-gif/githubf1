@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label class="form-label">your Name</label>
+    <input type="text" name="your_name" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Mobile Number</label>
+    <input type="text" name="mobile_no" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Email Address</label>
+    <input type="email" name="email" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Number of Tickets</label>
+    <input type="number"
+           name="tickets"
+           class="form-control"
+           min="1"
+           max="{{ event.seats_available }}"
+           required>
+  </div>
+
+  <button type="submit" class="btn btn-success w-100">
+    Confirm Booking ✅
+  </button>
+
+</form>
+
+  {% endblock %}

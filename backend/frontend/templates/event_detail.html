@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow p-4">
+  <h2 class="fw-bold">{{ event.title }}</h2>
+
+  <p>{{ event.description }}</p>
+
+  <ul class="list-group mb-3">
+    <li class="list-group-item"><strong>Location:</strong> {{ event.location }}</li>
+    <li class="list-group-item"><strong>Date:</strong> {{ event.date }}</li>
+    <li class="list-group-item"><strong>Price:</strong> ₹{{ event.price }}</li>
+    <li class="list-group-item"><strong>Seats:</strong> {{ event.seats_available }}</li>
+    <li class="list-group-item"><strong><img src="" alt=""></strong> {{ event.image }}</li>
+    {% if event.image %}
+{% if event.image %}
+  <img src="{{ event.image.url }}" class="img-fluid rounded mb-3">
+{% endif %}
+        {% else %}
+        <p>No image uploaded</p>
+        {% endif %}
+
+</ul>
+
+<a href="/book/{{ event.id }}/" class="btn btn-success">
+  Book Now 🎟
+</a>
+
+</div>
+{% endblock %}

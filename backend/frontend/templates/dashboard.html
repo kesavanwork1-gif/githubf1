@@ -1,0 +1,66 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+
+{% block content %}
+<h2 class="fw-bold mb-4">My Bookings 📌</h2>
+
+<table class="table table-bordered table-striped shadow">
+  <thead class="table-dark">
+    <tr>
+      <th>Event</th>
+      <th>Tickets</th>
+      <th>Date</th>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for booking in bookings %}
+    <tr>
+      <td>{{ booking.event.title }}</td>
+      <td>{{ booking.tickets }}</td>
+      <td>{{ booking.booked_on }}</td>
+      <td>
+    <button 
+        class="btn btn-danger btn-sm cancel-btn"
+        data-id="{{ booking.id }}">
+        Cancel
+    </button>
+</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="3" class="text-center">No bookings yet 😢</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+document.querySelectorAll(".cancel-btn").forEach(button => {
+    button.addEventListener("click", function() {
+
+        const bookingId = this.dataset.id;
+        const row = this.closest("tr");
+
+        fetch(`/api/bookings/${bookingId}/`, {
+            method: "DELETE",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                row.remove();
+                alert("Booking cancelled successfully!");
+            } else {
+                alert("Error cancelling booking");
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
